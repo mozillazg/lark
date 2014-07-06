@@ -18,8 +18,8 @@ class Music(TimeStampedModel):
     ogg = models.URLField(_('ogg file url'))
 
     class Meta:
-        verbose_name = _('title')
-        verbose_name_plural = _('title')
+        verbose_name = _('music')
+        verbose_name_plural = _('music')
 
     def __str__(self):
-        return '<{0} by {2}>'.format(self.title, self.author)
+        return '<{0} by {1}>'.format(self.title, self.author)
