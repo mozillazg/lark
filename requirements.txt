@@ -1,0 +1,1 @@
+git+https://github.com/django/django.git@stable/1.7.x#egg=django-1.7dev
