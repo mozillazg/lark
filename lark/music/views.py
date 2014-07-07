@@ -1,25 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, print_function, unicode_literals
+import random
 
-from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.utils.translation import ugettext_lazy as _
-# from django.views.generic.edit import CreateView, DeleteView, UpdateView
-# from django.views.generic.list import ListView
-
-# from .forms import CreateForm
-# from .models import Poll
+from .decorators import json_view
+from .models import Music
 
 
-# def index(request, template_name='music/index.html',
-#           extra_context=None):
-#     context = {
-#         'foo': 'bar',
-#     }
-#     if extra_context:
-#         context.update(extra_context)
-#     return render_to_response(template_name, context,
-#                               context_instance=RequestContext(request))
+@json_view()
+def next_music(request, next_number):
+    """下一首歌"""
+    try:
+        music = Music.objects.filter()[int(next_number)]
+    except IndexError:
+        music = Music.objects.filter()[0]
+    obj = {
+        'status': 0,
+        'data': {
+            'title': music.title,
+            'author': music.author,
+            'cover': music.cover,
+            'douban': music.douban,
+            'mp3': music.mp3,
+            'ogg': music.ogg,
+        },
+    }
+    return obj
+
+
+def random_music(request):
+    """随机歌曲"""
+    next_number = random.randint(0, Music.objects.filter().count())
+    return next_music(request, next_number)
