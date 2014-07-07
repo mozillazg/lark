@@ -1,10 +1,11 @@
 [
 {
   "fields": {
+    "douban": "http://music.douban.com/subject/2999395/",
     "author": "Vox Angeli",
     "title": "Si Seulement Je Pouvais Lui Manquer",
     "cover": "http://tmp-images.qiniudn.com/lark/c8d53367006ed4d17c1965c4540a997802c260e5.jpg",
-    "modified": "2014-07-06T04:15:37.605Z",
+    "modified": "2014-07-07T02:20:41.484Z",
     "created": "2014-07-06T04:15:37.603Z",
     "mp3": "http://tmp-images.qiniudn.com/lark/c8d53367006ed4d17c1965c4540a997802c260e5.mp3",
     "ogg": "http://tmp-images.qiniudn.com/lark/c8d53367006ed4d17c1965c4540a997802c260e5.ogg"
