@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="http://labs.music.baidu.com/muplayer/doc/css/player-demo.css">
     <style>
       #player-demo .avatar img{
-        width: 0;
+        /* width: 0; */
       }
     </style>
   </head>
@@ -76,113 +76,130 @@
           $volume = $player.find('.volume'),
           $progress = $player.find('.progress-bar'),
           $avatar = $player.find('.avatar'),
+          hasAddNewMusic = false,
 
           // 监听播放时派发的timeupdate事件以更新播放进度条等相关UI
           handleTimeupdate = function() {
             var pos = player.curPos(),
-            duration = player.duration();
-            $progress.slider('option', 'value', duration ? pos / duration * 1000 : 0);
+                duration = player.duration(),
+                progressValue = duration ? pos / duration * 1000 : 0;
+            $progress.slider('option', 'value', progressValue);
+            if (!hasAddNewMusic && progressValue >= 800) {
+              // 添加新的音乐
+              newMusic();
+              hasAddNewMusic = true;
+            } else if (progressValue == 0) {
+              hasAddNewMusic = false;
+            }
           };
 
-        player.add([
-            'http://tmp-images.qiniudn.com/lark/c8d53367006ed4d17c1965c4540a997802c260e5.ogg'
-            ]);
-
-        // 在各个按钮上监听点击事件，触发时改变按钮的对应样式，并执行player的相应方法
-        $ctrlBtn.click(function() {
-          if ($ctrlIcon.hasClass('glyphicon-play')) {
-            $ctrlIcon.removeClass('glyphicon-play').addClass('glyphicon-pause');
-            player.play();
-          } else if ($ctrlIcon.hasClass('glyphicon-pause')) {
-            $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
-            player.pause();
-          }
-        });
-
-        $prevBtn.click(function() {
-          player.prev();
-        });
-
-        $nextBtn.click(function() {
-          player.next();
-        });
-
-        var modes = ['loop', 'list-random'],
-            modeIndex = 0;
-        $modeBtn.click(function() {
-          var mode = modes[++modeIndex % 2];
-          player.setMode(mode);
-          if (mode === 'loop') {
-            $modeIcon.removeClass('glyphicon-random').addClass('glyphicon-refresh');
-          } else {
-            $modeIcon.removeClass('glyphicon-refresh').addClass('glyphicon-random');
-          }
-        });
-
-        $volume.find('i').click(function() {
-          var $this = $(this),
-          isMute = player.getMute();
-
-        if (isMute) {
-          $this.removeClass('glyphicon-volume-off')
-          .addClass('glyphicon-volume-down').parent().removeClass('mute');
-        player.setMute(false);
-        } else {
-          $this.removeClass('glyphicon-volume-down')
-          .addClass('glyphicon-volume-off').parent().addClass('mute');
-        player.setMute(true);
-        }
-        });
-
-        $volume.find('.bar').slider({
-          value: player.getVolume(),
-          range: 'min',
-          change: function(e, ui) {
-            player.setVolume(ui.value);
-          },
-          stop: function(e, ui) {
-            $(ui.handle).blur();
-          }
-        });
-
-        // 通过jquery-ui的slider组件实现播放进度条的交互
-        $progress.slider({
-          range: 'min',
-          max: 1000,
-          disabled: true,
-          start: function() {
-            // 为了使拖动操作不受打断，进度条拖动操作开始时即暂停对timeupdate事件的监听
-            player.off('timeupdate');
-          },
-          stop: function(e, ui) {
-            // 拖动结束时再恢复对timeupdate事件的监听
-            player.on('timeupdate', handleTimeupdate).play(ui.value * player.duration());
-            $(ui.handle).blur();
-          }
-        });
-
-        // 事件驱动的UI：即UI应监听player派发的事件，以决定是否切换到对应的状态
-        player.on('player:play', function() {
-          $progress.slider('enable');
-          $ctrlIcon.removeClass('glyphicon-play').addClass('glyphicon-pause');
-        }).on('player:pause player:stop', function() {
-          $progress.slider('disable');
-          $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
-        }).on('timeupdate', handleTimeupdate).on('player:fetchend', function(r) {
-          var info = r.songinfo;
-          if (info) {
-            var title = info.title + ' - ' + info.author;
-            $avatar.attr({
-              title: title
-            }).find('img').attr({
-              alt: title,
-              src: info.pic_small
+          // 添加新的音乐
+          function newMusic() {
+            $.ajax({
+              url: '/music/api/random/',
+              success: function(data) {
+                player.add([data.data.ogg]);
+                player.play();
+              }
             });
-          }
-        });
+          };
 
-      // 自动播放
-      player.play();
+
+          // 在各个按钮上监听点击事件，触发时改变按钮的对应样式，并执行player的相应方法
+          $ctrlBtn.click(function() {
+            if ($ctrlIcon.hasClass('glyphicon-play')) {
+              $ctrlIcon.removeClass('glyphicon-play').addClass('glyphicon-pause');
+              player.play();
+            } else if ($ctrlIcon.hasClass('glyphicon-pause')) {
+              $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
+              player.pause();
+            }
+          });
+
+          $prevBtn.click(function() {
+            player.prev();
+          });
+
+          $nextBtn.click(function() {
+            player.next();
+            newMusic();
+          });
+
+          var modes = ['loop', 'list-random'],
+              modeIndex = 0;
+          $modeBtn.click(function() {
+            var mode = modes[++modeIndex % 2];
+            player.setMode(mode);
+            if (mode === 'loop') {
+              $modeIcon.removeClass('glyphicon-random').addClass('glyphicon-refresh');
+            } else {
+              $modeIcon.removeClass('glyphicon-refresh').addClass('glyphicon-random');
+            }
+          });
+
+          $volume.find('i').click(function() {
+            var $this = $(this),
+            isMute = player.getMute();
+
+            if (isMute) {
+              $this.removeClass('glyphicon-volume-off')
+              .addClass('glyphicon-volume-down').parent().removeClass('mute');
+            player.setMute(false);
+            } else {
+              $this.removeClass('glyphicon-volume-down')
+              .addClass('glyphicon-volume-off').parent().addClass('mute');
+              player.setMute(true);
+            }
+          });
+
+          $volume.find('.bar').slider({
+            value: player.getVolume(),
+            range: 'min',
+            change: function(e, ui) {
+              player.setVolume(ui.value);
+            },
+            stop: function(e, ui) {
+              $(ui.handle).blur();
+            }
+          });
+
+          // 通过jquery-ui的slider组件实现播放进度条的交互
+          $progress.slider({
+            range: 'min',
+            max: 1000,
+            disabled: true,
+            start: function() {
+              // 为了使拖动操作不受打断，进度条拖动操作开始时即暂停对timeupdate事件的监听
+              player.off('timeupdate');
+            },
+            stop: function(e, ui) {
+              // 拖动结束时再恢复对timeupdate事件的监听
+              player.on('timeupdate', handleTimeupdate).play(ui.value * player.duration());
+              $(ui.handle).blur();
+            }
+          });
+
+          // 事件驱动的UI：即UI应监听player派发的事件，以决定是否切换到对应的状态
+          player.on('player:play', function() {
+            $progress.slider('enable');
+            $ctrlIcon.removeClass('glyphicon-play').addClass('glyphicon-pause');
+          }).on('player:pause player:stop', function() {
+            $progress.slider('disable');
+            $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
+          }).on('timeupdate', handleTimeupdate).on('player:fetchend', function(r) {
+            var info = r.songinfo;
+            if (info) {
+              var title = info.title + ' - ' + info.author;
+              $avatar.attr({
+                title: title
+              }).find('img').attr({
+                alt: title,
+                src: info.pic_small
+              });
+            }
+          });
+
+        newMusic();
     });
 </script>
   </footer>

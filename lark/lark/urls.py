@@ -6,7 +6,7 @@ urlpatterns = patterns(
     '',
     # Examples:
     url(r'^$', TemplateView.as_view(template_name='index.html')),
-    url(r'^', include('music.urls')),
+    url(r'^music/', include('music.urls')),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
