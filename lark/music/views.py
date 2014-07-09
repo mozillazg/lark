@@ -7,7 +7,7 @@ from .decorators import json_view
 from .models import Music
 
 
-@json_view()
+@json_view
 def next_music(request, next_number):
     """下一首歌"""
     try:

@@ -6,7 +6,7 @@ import json
 from django.http import HttpResponse
 
 
-def json_view(**response_kwargs):
+def json_view(func=None, **response_kwargs):
     """装饰 JSON view ::
 
         @json_view()
@@ -40,4 +40,8 @@ def json_view(**response_kwargs):
             content = json.dumps(context)
             return HttpResponse(content, **response_kwargs)
         return wrapper
-    return decorator
+
+    if func is not None:
+        return decorator(func)
+    else:
+        return decorator
