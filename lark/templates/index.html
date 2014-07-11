@@ -73,7 +73,7 @@
             setTimeout((function(_this) {
               return function() {
                 var sid = _this.getCur();
-                $.getJSON('/music/api/' + sid + '/', function(data) {
+                $.getJSON('/music/api/music/' + sid + '/', function(data) {
                   _this.setUrl(data.data.ogg);
                   return def.resolve();
                 });

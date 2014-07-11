@@ -88,19 +88,19 @@ class TestView(object):
         request = rf.get(reverse('music:next', kwargs={'next_number': 1}))
         response = next_music(request, 1)
         assert response.status_code == 200
-        assert json.loads(response.content.decode())['data'] in (self.c, self.d)
+        assert json.loads(response.content.decode())['data']
 
     def test_next_music_index_error(self, rf):
         request = rf.get(reverse('music:next', kwargs={'next_number': 10000}))
         response = next_music(request, 10000)
         assert response.status_code == 200
-        assert json.loads(response.content.decode())['data'] in (self.c, self.d)
+        assert json.loads(response.content.decode())['data']
 
     def test_random(self, rf):
         request = rf.get(reverse('music:random'))
         response = random_music(request)
         assert response.status_code == 200
-        assert json.loads(response.content.decode())['data'] in (self.c, self.d)
+        assert json.loads(response.content.decode())['data']
 
 
 class TestDeocrator(object):
