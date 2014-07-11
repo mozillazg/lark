@@ -62,18 +62,18 @@ class TestView(object):
         request = rf.get(reverse('music:next', kwargs={'next_number': 1}))
         response = next_music(request, 1)
         assert response.status_code == 200
-        assert json.loads(response.content)['data'] in (self.c, self.d)
+        assert json.loads(response.content.decode())['data'] in (self.c, self.d)
 
     def test_next_music_index_error(self, rf):
         request = rf.get(reverse('music:next', kwargs={'next_number': 10000}))
         response = next_music(request, 10000)
         assert response.status_code == 200
-        assert json.loads(response.content)['data'] in (self.c, self.d)
+        assert json.loads(response.content.decode())['data'] in (self.c, self.d)
 
     def test_random(self, client):
         response = client.get(reverse('music:random'))
         assert response.status_code == 200
-        assert json.loads(response.content)['data'] in (self.c, self.d)
+        assert json.loads(response.content.decode())['data'] in (self.c, self.d)
 
 
 class TestDeocrator(object):
@@ -87,13 +87,13 @@ class TestDeocrator(object):
         assert isinstance(response, HttpResponse)
         assert response.status_code == 200
         assert response['Content-Type'] == 'application/json'
-        assert json.loads(response.content) == d1
+        assert json.loads(response.content.decode()) == d1
 
         response = json_view(view2)(rf.get('/'))
         assert isinstance(response, HttpResponse)
         assert response.status_code == 400
         assert response['Content-Type'] == 'application/json'
-        assert json.loads(response.content) == d1
+        assert json.loads(response.content.decode()) == d1
 
         response = json_view(view3)(rf.get('/'))
         assert isinstance(response, HttpResponse)
