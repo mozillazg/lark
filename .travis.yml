@@ -15,11 +15,11 @@ env:
   - PYTHONPATH=`pwd`
 
 script:
-  if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install importlib; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install importlib; fi
   - py.test
 
 after_script:
-  - "coveralls"
+  - coveralls
 
 notifications:
   email:
