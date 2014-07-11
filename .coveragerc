@@ -1,0 +1,9 @@
+[run]
+omit =
+  lark/lark/settings.py
+  lark/lark/wsgi.py
+  lark/manage.py
+
+[report]
+exclude_lines =
+  except ImportError

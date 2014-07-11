@@ -1,6 +1,0 @@
-git+https://github.com/django/django.git@stable/1.7.x#egg=django-1.7dev
-django-model-utils==2.0.3
-ipython
-pytz==2014.4
-pytest
-pytest-django
