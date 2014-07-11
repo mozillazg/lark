@@ -77,7 +77,7 @@
                   url: '/music/api/music/' + sid + '/',
                   async: false,
                   success: function(data) {
-                    _this.setUrl(data.data.mp3);
+                    _this.setUrl(data.data.ogg);
                     return def.resolve();
                   },
                   error: function() {
@@ -122,7 +122,7 @@
               // 添加新的音乐
               newMusic();
               hasAddedNewMusic = true;
-            } else if (progressValue <= 500) {
+            } else if (hasAddedNewMusic && progressValue <= 500) {
               hasAddedNewMusic = false;
             }
           };
