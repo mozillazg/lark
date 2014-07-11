@@ -99,4 +99,4 @@ class TestDeocrator(object):
         assert isinstance(response, HttpResponse)
         assert response.status_code == 200
         assert response['Content-Type'] == 'text/html; charset=utf-8'
-        assert response.content == str(d1)
+        assert response.content.decode() == str(d1)
