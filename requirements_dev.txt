@@ -1,3 +1,5 @@
+-r requirements_base.txt
 ipython
 pytest
 pytest-django
+pytest-cov
