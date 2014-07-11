@@ -17,10 +17,17 @@ class Music(TimeStampedModel):
     douban = models.URLField(_('douban page'), blank=True)
     mp3 = models.URLField(_('mp3 file url'))
     ogg = models.URLField(_('ogg file url'))
+    sid = models.CharField(_('SID'), max_length=10, blank=True)
 
     class Meta:
         verbose_name = _('music')
         verbose_name_plural = _('music')
 
     def __str__(self):
-        return '<{0} by {1}>'.format(self.title, self.author)
+        return '"{0}" by {1}'.format(self.title, self.author)
+
+    def save(self, *args, **kwargs):
+        super(Music, self).save(*args, **kwargs)
+        if not self.sid:
+            self.sid = self.pk
+            self.save(update_fields=('sid',))

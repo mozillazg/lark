@@ -8,6 +8,6 @@ from .models import Music
 
 
 class MusicAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'author', 'created', 'modified')
+    list_display = ('id', 'sid', 'title', 'author', 'created', 'modified')
     search_fields = ('title', 'author')
 admin.site.register(Music, MusicAdmin)
