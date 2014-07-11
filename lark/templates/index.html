@@ -63,7 +63,7 @@
         // 通过AMD方式加载muplayer
         require(['muplayer/player'], function(Player) {
 
-        // 重新 _fetch 方法，支持通过 sid 获取音频资源信息
+        // 重写 _fetch 方法，支持通过 sid 获取音频资源信息
         Player.prototype._fetch = function() {
           var def;
           def = $.Deferred();
@@ -73,9 +73,16 @@
             setTimeout((function(_this) {
               return function() {
                 var sid = _this.getCur();
-                $.getJSON('/music/api/music/' + sid + '/', function(data) {
-                  _this.setUrl(data.data.ogg);
-                  return def.resolve();
+                $.ajax({
+                  url: '/music/api/music/' + sid + '/',
+                  async: false,
+                  success: function(data) {
+                    _this.setUrl(data.data.ogg);
+                    return def.resolve();
+                  },
+                  error: function() {
+                    def.resolve();
+                  }
                 });
               };
             })(this), 0);
@@ -84,6 +91,7 @@
         };
 
 
+          hasAddedNewMusic = false;
           var player = window.player = new Player({
             baseDir: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2',
             absoluteUrl: false,
@@ -103,7 +111,6 @@
           $volume = $player.find('.volume'),
           $progress = $player.find('.progress-bar'),
           $avatar = $player.find('.avatar'),
-          hasAddNewMusic = false,
 
           // 监听播放时派发的timeupdate事件以更新播放进度条等相关UI
           handleTimeupdate = function() {
@@ -111,12 +118,12 @@
                 duration = player.duration(),
                 progressValue = duration ? pos / duration * 1000 : 0;
             $progress.slider('option', 'value', progressValue);
-            if (!hasAddNewMusic && progressValue >= 800) {
+            if (!hasAddedNewMusic && progressValue >= 800) {
               // 添加新的音乐
               newMusic();
-              hasAddNewMusic = true;
-            } else if (progressValue == 0) {
-              hasAddNewMusic = false;
+              hasAddedNewMusic = true;
+            } else if (progressValue <= 500) {
+              hasAddedNewMusic = false;
             }
           };
 
@@ -144,12 +151,13 @@
           });
 
           $prevBtn.click(function() {
+            newMusic();
             player.prev();
           });
 
           $nextBtn.click(function() {
-            player.next();
             newMusic();
+            player.next();
           });
 
           var modes = ['loop', 'list-random'],
@@ -226,6 +234,9 @@
             }
           });
 
+        // 先初始化添加3首歌
+        newMusic();
+        newMusic();
         newMusic();
     });
 </script>
