@@ -11,6 +11,10 @@ install:
   - "pip install -r requirements_dev.txt"
   - "pip install coveralls"
 
+env:
+  - DJANGO_SETTINGS_MODULE=lark.lark.settings_test
+  - PYTHONPATH=`pwd`
+
 script:
   # - "python setup.py install"
   - "py.test"
