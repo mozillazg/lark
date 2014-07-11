@@ -1,5 +1,4 @@
 -r requirements_base.txt
-importlib
 ipython
 pytest
 pytest-django

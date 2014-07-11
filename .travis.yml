@@ -11,8 +11,12 @@ install:
   - "pip install -r requirements_dev.txt"
   - "pip install coveralls"
 
+env:
+  - PYTHONPATH=`pwd`
+
 script:
-  - PYTHONPATH=`pwd` && py.test
+  if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install importlib; fi
+  - py.test
 
 after_script:
   - "coveralls"
