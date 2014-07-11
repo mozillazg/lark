@@ -77,7 +77,7 @@
                   url: '/music/api/music/' + sid + '/',
                   async: false,
                   success: function(data) {
-                    _this.setUrl(data.data.ogg);
+                    _this.setUrl(data.data.mp3);
                     return def.resolve();
                   },
                   error: function() {
