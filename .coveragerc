@@ -1,7 +1,6 @@
 [run]
 omit =
-  lark/lark/settings.py
-  lark/lark/wsgi.py
+  lark/lark/*.py
   lark/manage.py
 
 [report]
