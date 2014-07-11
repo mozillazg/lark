@@ -3,7 +3,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 import json
 
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 import pytest
 
@@ -59,19 +59,19 @@ class TestView(object):
         Music.objects.create(**self.d)
 
     def test_next_music(self, rf):
-        request = rf.get(reverse_lazy('music:next', kwargs={'next_number': 1}))
+        request = rf.get(reverse('music:next', kwargs={'next_number': 1}))
         response = next_music(request, 1)
         assert response.status_code == 200
         assert json.loads(response.content)['data'] in (self.c, self.d)
 
     def test_next_music_index_error(self, rf):
-        request = rf.get(reverse_lazy('music:next', kwargs={'next_number': 10000}))
+        request = rf.get(reverse('music:next', kwargs={'next_number': 10000}))
         response = next_music(request, 10000)
         assert response.status_code == 200
         assert json.loads(response.content)['data'] in (self.c, self.d)
 
     def test_random(self, client):
-        response = client.get(reverse_lazy('music:random'))
+        response = client.get(reverse('music:random'))
         assert response.status_code == 200
         assert json.loads(response.content)['data'] in (self.c, self.d)
 
