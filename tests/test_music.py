@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, print_function, unicode_literals
+import copy
 import json
 
 from django.core.urlresolvers import reverse
@@ -9,7 +10,7 @@ import pytest
 
 from music.decorators import json_view
 from music.models import Music
-from music.views import next_music
+from music.views import next_music, json_obj, random_music
 
 
 @pytest.mark.django_db
@@ -19,16 +20,21 @@ class TestMusic(object):
                       cover='http://www.example.com/a.jpg',
                       douban='http://music.douban.com/a',
                       mp3='http://www.example.com/a.mp3',
-                      ogg='http://www.example.com/a.ogg'
+                      ogg='http://www.example.com/a.ogg',
+                      sid='1',
                       )
         self.b = dict(title='music_b', author='author_b',
                       cover='http://www.example.com/b.jpg',
                       douban='http://music.douban.com/b',
                       mp3='http://www.example.com/b.mp3',
-                      ogg='http://www.example.com/b.ogg'
+                      ogg='http://www.example.com/b.ogg',
+                      sid='2',
                       )
         Music.objects.create(**self.a)
         Music.objects.create(**self.b)
+
+    def teardown(self):
+        Music.objects.all().delete()
 
     def test_music(self):
         a = Music.objects.get(title=self.a['title'])
@@ -47,16 +53,36 @@ class TestView(object):
                       cover='http://www.example.com/c.jpg',
                       douban='http://music.douban.com/c',
                       mp3='http://www.example.com/c.mp3',
-                      ogg='http://www.example.com/c.ogg'
+                      ogg='http://www.example.com/c.ogg',
+                      sid='4',
                       )
         self.d = dict(title='music_d', author='author_d',
                       cover='http://www.example.com/d.jpg',
                       douban='http://music.douban.com/d',
                       mp3='http://www.example.com/d.mp3',
-                      ogg='http://www.example.com/d.ogg'
+                      ogg='http://www.example.com/d.ogg',
+                      sid='5',
                       )
-        Music.objects.create(**self.c)
-        Music.objects.create(**self.d)
+        self.e = copy.copy(self.d)
+        self.e.pop('sid')
+        self.m_c = Music.objects.create(**self.c)
+        self.m_d = Music.objects.create(**self.d)
+        Music(**self.e).save()
+
+    def teardown(self):
+        Music.objects.all().delete()
+
+    def test_json_obj(self):
+        obj = json_obj(self.m_c)
+        assert obj['status'] == 0
+
+    def test_music(self, client):
+        response = client.get(reverse('music:music', kwargs={'sid': 4}))
+        assert json.loads(response.content.decode())['data'] == self.c
+
+    def test_music_sid_error(self, client):
+        response = client.get(reverse('music:music', kwargs={'sid': 1000}))
+        assert json.loads(response.content.decode())['data']
 
     def test_next_music(self, rf):
         request = rf.get(reverse('music:next', kwargs={'next_number': 1}))
@@ -70,8 +96,9 @@ class TestView(object):
         assert response.status_code == 200
         assert json.loads(response.content.decode())['data'] in (self.c, self.d)
 
-    def test_random(self, client):
-        response = client.get(reverse('music:random'))
+    def test_random(self, rf):
+        request = rf.get(reverse('music:random'))
+        response = random_music(request)
         assert response.status_code == 200
         assert json.loads(response.content.decode())['data'] in (self.c, self.d)
 
