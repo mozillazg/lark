@@ -10,6 +10,10 @@
       #player-demo .avatar img{
         /* width: 0; */
       }
+      .mod {
+        width: 320px;
+        margin: 10% auto;
+      }
     </style>
   </head>
   <body>
@@ -58,11 +62,34 @@
 
         // 通过AMD方式加载muplayer
         require(['muplayer/player'], function(Player) {
+
+        // 重新 _fetch 方法，支持通过 sid 获取音频资源信息
+        Player.prototype._fetch = function() {
+          var def;
+          def = $.Deferred();
+          if (this.getUrl() === this.getCur()) {
+            def.resolve();
+          } else {
+            setTimeout((function(_this) {
+              return function() {
+                var sid = _this.getCur();
+                $.getJSON('/music/api/' + sid + '/', function(data) {
+                  _this.setUrl(data.data.ogg);
+                  return def.resolve();
+                });
+              };
+            })(this), 0);
+          }
+          return def.promise();
+        };
+
+
           var player = window.player = new Player({
             baseDir: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2',
-              engines: [{
-                constructor: 'AudioCore'
-              }]
+            absoluteUrl: false,
+            engines: [{
+              constructor: 'AudioCore'
+            }]
 
           }),
           $player = $('.player-widget'),
@@ -98,7 +125,7 @@
             $.ajax({
               url: '/music/api/random/',
               success: function(data) {
-                player.add([data.data.ogg]);
+                player.add([data.data.sid]);
                 player.play();
               }
             });
