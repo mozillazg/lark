@@ -5,24 +5,46 @@
     <meta name="viewport" content="width=device-width">
     <title>Lark</title>
     <link rel="stylesheet" href="http://labs.music.baidu.com/muplayer/doc/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://labs.music.baidu.com/muplayer/doc/css/player-demo.css">
+    <link rel="stylesheet" href="http://tmp-images.qiniudn.com/lark/player.css">
     <style>
-      #player-demo .avatar img{
-        /* width: 0; */
+      #player-demo .avatar img {
+        width: 0;
       }
       .mod {
-        width: 320px;
+        width: 330px;
         margin: 10% auto;
+      }
+      .music-info img {
+        width: 320px;
+        height: 200px;
+      }
+      .music-info .title {
+        text-align: left;
+      }
+      .music-info .author {
+        text-align: right;
       }
     </style>
   </head>
   <body>
 
     <div class="mod">
-      <div class="hd">带UI的简易播放器</div>
+      <!-- <div class="hd">带UI的简易播放器</div> -->
+      <div class="music-info">
+        <div class="cover">
+          <a href="" id="cover-link">
+            <img src="http://tmp-images.qiniudn.com/lark/default.png" id="cover-img" />
+          </a>
+        </div>
+        <div class="title"><span id="title"></span></div>
+        <div class="author">—— <span id="author"></span></div>
+      </div>
       <div class="bd">
         <div id="player-demo">
           <div class="player-widget">
+            <div class="volume" title="volume">
+              <i class="glyphicon glyphicon-volume-down"></i><span class="bar"></span>
+            </div>
             <div class="opts">
               <span class="prev" title="prev">
                 <i class="glyphicon glyphicon-step-backward"></i>
@@ -34,9 +56,6 @@
                 <i class="glyphicon glyphicon-step-forward"></i>
               </span>
               <span class="mode" title="mode"><i class="glyphicon glyphicon-repeat"></i></span>
-            </div>
-            <div class="volume" title="volume">
-              <i class="glyphicon glyphicon-volume-down"></i><span class="bar"></span>
             </div>
             <a class="avatar" href="javascript:;">
               <img alt="" src="http://labs.music.baidu.com/muplayer/doc/img/default.jpg">
@@ -77,7 +96,16 @@
                   url: '/music/api/music/' + sid + '/',
                   async: false,
                   success: function(data) {
-                    _this.setUrl(data.data.ogg);
+                    data = data.data
+                    _this.setUrl(data.ogg);
+                    var $coverLink = $("#cover-link"),
+                        $coverImg = $("#cover-img"),
+                        $title = $("#title"),
+                        $author = $("#author");
+                    $coverLink.prop("href", data.douban);
+                    $coverImg.prop("src", data.cover);
+                    $title.text(data.title);
+                    $author.text(data.author);
                     return def.resolve();
                   },
                   error: function() {
