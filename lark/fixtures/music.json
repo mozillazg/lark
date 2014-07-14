@@ -5,12 +5,103 @@
     "author": "Vox Angeli",
     "title": "Si Seulement Je Pouvais Lui Manquer",
     "cover": "http://tmp-images.qiniudn.com/lark/c8d53367006ed4d17c1965c4540a997802c260e5.jpg",
-    "modified": "2014-07-07T02:20:41.484Z",
+    "modified": "2014-07-11T08:16:26.327Z",
     "created": "2014-07-06T04:15:37.603Z",
     "mp3": "http://tmp-images.qiniudn.com/lark/c8d53367006ed4d17c1965c4540a997802c260e5.mp3",
+    "sid": "1",
     "ogg": "http://tmp-images.qiniudn.com/lark/c8d53367006ed4d17c1965c4540a997802c260e5.ogg"
   },
   "model": "music.music",
   "pk": 1
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1401550/",
+    "author": "James Blunt",
+    "title": "You're Beautiful",
+    "cover": "http://tmp-images.qiniudn.com/lark/618a801b716991f21cf6877a8960d95f336f6627.jpg",
+    "modified": "2014-07-11T08:16:29.339Z",
+    "created": "2014-07-11T06:36:46.396Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/618a801b716991f21cf6877a8960d95f336f6627.mp3",
+    "sid": "2",
+    "ogg": "http://tmp-images.qiniudn.com/lark/618a801b716991f21cf6877a8960d95f336f6627.ogg"
+  },
+  "model": "music.music",
+  "pk": 2
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1729648/",
+    "author": "SNoW",
+    "title": "\u9006\u3055\u307e\u306e\u8776",
+    "cover": "http://tmp-images.qiniudn.com/lark/55087e83be12b90e66e1ad114238a9c0787da04e.jpg",
+    "modified": "2014-07-11T08:16:31.939Z",
+    "created": "2014-07-11T06:37:10.598Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/55087e83be12b90e66e1ad114238a9c0787da04e.mp3",
+    "sid": "3",
+    "ogg": "http://tmp-images.qiniudn.com/lark/55087e83be12b90e66e1ad114238a9c0787da04e.ogg"
+  },
+  "model": "music.music",
+  "pk": 3
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/3346288/",
+    "author": "\u30ec\u30a4\u30f3\u30d6\u30c3\u30af",
+    "title": "\u7a7a\u306e\u83ef",
+    "cover": "http://tmp-images.qiniudn.com/lark/f0149f28d7f3513c8f15434b26270b07fcccde57.jpg",
+    "modified": "2014-07-11T08:16:38.604Z",
+    "created": "2014-07-11T06:37:35.998Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/f0149f28d7f3513c8f15434b26270b07fcccde57.mp3",
+    "sid": "4",
+    "ogg": "http://tmp-images.qiniudn.com/lark/f0149f28d7f3513c8f15434b26270b07fcccde57.ogg"
+  },
+  "model": "music.music",
+  "pk": 4
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/3010493/",
+    "author": "\u30ec\u30a4\u30f3\u30d6\u30c3\u30af",
+    "title": "\u5343\u672c\u685c",
+    "cover": "http://tmp-images.qiniudn.com/lark/39dc9ebaef3ea86e5de0ce0647388deb5a62b6f4.jpg",
+    "modified": "2014-07-11T08:16:34.585Z",
+    "created": "2014-07-11T06:37:56.376Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/39dc9ebaef3ea86e5de0ce0647388deb5a62b6f4.mp3",
+    "sid": "5",
+    "ogg": "http://tmp-images.qiniudn.com/lark/39dc9ebaef3ea86e5de0ce0647388deb5a62b6f4.ogg"
+  },
+  "model": "music.music",
+  "pk": 5
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/3346288/",
+    "author": "\u30ec\u30a4\u30f3\u30d6\u30c3\u30af",
+    "title": "\u3042\u306a\u305f\u306e\u98a8\u306b\u306a\u308a\u305f\u3044",
+    "cover": "http://tmp-images.qiniudn.com/lark/18d10a43bb9730de32ef4e53ddbe5c1fd0d1ba4b.jpg",
+    "modified": "2014-07-11T08:16:49.664Z",
+    "created": "2014-07-11T06:38:14.100Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/18d10a43bb9730de32ef4e53ddbe5c1fd0d1ba4b.mp3",
+    "sid": "6",
+    "ogg": "http://tmp-images.qiniudn.com/lark/18d10a43bb9730de32ef4e53ddbe5c1fd0d1ba4b.ogg"
+  },
+  "model": "music.music",
+  "pk": 6
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1395358/",
+    "author": "\u90b5\u5bb9",
+    "title": "\u6628\u65e5 A Day Goes By",
+    "cover": "http://tmp-images.qiniudn.com/lark/6d18ae35b21499cfa239dad64c7fdcfc4da7a2c1.jpg",
+    "modified": "2014-07-11T08:16:46.761Z",
+    "created": "2014-07-11T06:38:31.425Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/6d18ae35b21499cfa239dad64c7fdcfc4da7a2c1.mp3",
+    "sid": "7",
+    "ogg": "http://tmp-images.qiniudn.com/lark/6d18ae35b21499cfa239dad64c7fdcfc4da7a2c1.ogg"
+  },
+  "model": "music.music",
+  "pk": 7
 }
 ]

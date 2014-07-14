@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import re
+
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
@@ -9,5 +14,6 @@ urlpatterns = patterns(
     url(r'^music/', include('music.urls', namespace='music')),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^%s/' % re.escape(getattr(settings, 'ADMIN_URL', 'admin')),
+        include(admin.site.urls)),
 )
