@@ -8,33 +8,62 @@
     <link rel="stylesheet" href="http://tmp-images.qiniudn.com/lark/player.css">
     <style>
       .mod {
-        width: 200px;
+        width: 300px;
         margin: 5% auto;
       }
       .bd {
-        width: 200px;
+        width: 100%;
       }
       #player-demo {
+        width: 100%;
         height: 50px;
         margin-bottom: 0;
+        padding-bottom: 0;
+        /* margin-top: 3px; */
+        box-shadow: none;
+        -moz-box-shadow: none;
+        border-radius: 0 0 5px 5px;
+      }
+      #player-demo .opts {
+        padding-left: 20px;
+        margin-top: -15.5px;
+      }
+      #player-demo .volume {
+        left: 150px;
+      }
+      #player-demo .progress-bar {
+        bottom: auto;
+        top: 0;
+        left: 0;
+      }
+      #player-demo .progress-bar,
+      #player-demo .progress-bar .ui-slider-range {
+        height: 5px;
+      }
+      .bar .ui-slider-handle,
+      #player-demo .progress-bar .ui-slider-handle {
+        height: 7px;
       }
       #cover {
         width: 100%;
+        height: 200px;
+        background-image: url("http://tmp-images.qiniudn.com/lark/default.png");
+        background-size: 100% auto;
+        border-radius: 5px 5px 0 0;
       }
-      #cover-img {
-        width: 100%;
-        height: 100%;
-        margin: auto;
-      }
-      #title {
-        padding: 5px 0;
+      .music-info {
         text-align: center;
       }
-      #author {
-        padding-bottom: 5px;
-        text-align: right;
+      .meta {
+        font-size: 90%;
+        padding: 7px 0;
+        background-color: #c3d825;
       }
-      #author::before {
+      .meta #title {
+        font-size: 101%;
+        font-weight: bold;
+      }
+      .meta #author::before {
         content: "By ";
       }
     </style>
@@ -44,17 +73,20 @@
     <div class="mod">
       <!-- <div class="hd">带UI的简易播放器</div> -->
       <div class="music-info">
-        <div id="cover">
+        <div id="cover" class="cover">
           <a href="" id="cover-link">
-            <img src="http://tmp-images.qiniudn.com/lark/default.png" id="cover-img" />
+            <!-- <img src="http://tmp&#45;images.qiniudn.com/lark/default.png" id="cover&#45;img" /> -->
           </a>
         </div>
-        <div id="title"></div>
-        <div id="author"></div>
+        <div class="meta">
+          <div id="title"></div>
+          <div id="author"></div>
+        </div>
       </div>
       <div class="bd">
         <div id="player-demo">
           <div class="player-widget">
+            <div class="progress-bar"></div>
             <div class="volume" title="volume">
               <i class="glyphicon glyphicon-volume-down"></i><span class="bar"></span>
             </div>
@@ -70,7 +102,6 @@
               </span>
               <span class="mode" title="mode"><i class="glyphicon glyphicon-repeat"></i></span>
             </div>
-            <div class="progress-bar"></div>
           </div>
         </div>
       </div>
@@ -111,11 +142,11 @@
                     _this.setUrl(data.ogg);
                     // 更新封面及作者信息
                     var $coverLink = $("#cover-link"),
-                        $coverImg = $("#cover-img"),
+                        $cover = $("#cover"),
                         $title = $("#title"),
                         $author = $("#author");
                     $coverLink.prop("href", data.douban);
-                    $coverImg.prop("src", data.cover);
+                    $cover.css("background-image", 'url("' + data.cover +'")');
                     $title.text(data.title);
                     $author.text(data.author);
                     return def.resolve();
