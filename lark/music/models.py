@@ -14,9 +14,9 @@ class Music(TimeStampedModel):
     title = models.CharField(_('title'), max_length=100)
     author = models.CharField(_('author'), max_length=50)
     cover = models.URLField(_('album cover'))
-    douban = models.URLField(_('douban page'), blank=True)
     mp3 = models.URLField(_('mp3 file url'))
     ogg = models.URLField(_('ogg file url'))
+    douban = models.URLField(_('douban page'), blank=True)
     sid = models.CharField(_('SID'), max_length=10, blank=True)
 
     class Meta:
