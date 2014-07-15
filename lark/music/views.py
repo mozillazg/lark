@@ -12,16 +12,13 @@ logger = logging.getLogger(__name__)
 
 def json_obj(music):
     obj = {
-        'status': 0,
-        'data': {
-            'title': music.title,
-            'author': music.author,
-            'cover': music.cover,
-            'douban': music.douban,
-            'mp3': music.mp3,
-            'ogg': music.ogg,
-            'sid': music.sid,
-        },
+        'title': music.title,
+        'author': music.author,
+        'cover': music.cover,
+        'douban': music.douban,
+        'mp3': music.mp3,
+        'ogg': music.ogg,
+        'sid': music.sid,
     }
     return obj
 

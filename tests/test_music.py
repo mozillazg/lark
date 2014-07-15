@@ -74,33 +74,33 @@ class TestView(object):
 
     def test_json_obj(self):
         obj = json_obj(self.m_c)
-        assert obj['status'] == 0
+        assert obj['title'] == self.m_c.title
 
     def test_music(self, client):
         response = client.get(reverse('music:music', kwargs={'sid': 4}))
-        assert json.loads(response.content.decode())['data'] == self.c
+        assert json.loads(response.content.decode()) == self.c
 
     def test_music_sid_error(self, client):
         response = client.get(reverse('music:music', kwargs={'sid': 1000}))
-        assert json.loads(response.content.decode())['data']
+        assert json.loads(response.content.decode())
 
     def test_next_music(self, rf):
         request = rf.get(reverse('music:next', kwargs={'next_number': 1}))
         response = next_music(request, 1)
         assert response.status_code == 200
-        assert json.loads(response.content.decode())['data']
+        assert json.loads(response.content.decode())
 
     def test_next_music_index_error(self, rf):
         request = rf.get(reverse('music:next', kwargs={'next_number': 10000}))
         response = next_music(request, 10000)
         assert response.status_code == 200
-        assert json.loads(response.content.decode())['data']
+        assert json.loads(response.content.decode())
 
     def test_random(self, rf):
         request = rf.get(reverse('music:random'))
         response = random_music(request)
         assert response.status_code == 200
-        assert json.loads(response.content.decode())['data']
+        assert json.loads(response.content.decode())
 
 
 class TestDeocrator(object):

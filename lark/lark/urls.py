@@ -11,7 +11,7 @@ urlpatterns = patterns(
     '',
     # Examples:
     url(r'^$', TemplateView.as_view(template_name='index.html')),
-    url(r'^', include('music.urls', namespace='music')),
+    url(r'^api/music/', include('music.urls', namespace='music')),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^%s/' % re.escape(getattr(settings, 'ADMIN_URL', 'admin')),

@@ -134,10 +134,9 @@
               return function() {
                 var sid = _this.getCur();
                 $.ajax({
-                  url: '/api/music/' + sid + '/',
+                  url: '/api/music/sid/' + sid + '/',
                   async: false,
                   success: function(data) {
-                    data = data.data
                     // 设置音频 URL
                     _this.setUrl(data.ogg);
                     // 更新封面及作者信息
@@ -201,9 +200,9 @@
           // 添加新的音乐
           function newMusic() {
             $.ajax({
-              url: '/api/random/',
+              url: '/api/music/random/',
               success: function(data) {
-                player.add([data.data.sid]);
+                player.add([data.sid]);
                 player.play();
               }
             });
