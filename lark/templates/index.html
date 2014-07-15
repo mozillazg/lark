@@ -38,7 +38,7 @@
       }
       #player-demo .progress-bar,
       #player-demo .progress-bar .ui-slider-range {
-        height: 5px;
+        height: 4px;
       }
       .bar .ui-slider-handle,
       #player-demo .progress-bar .ui-slider-handle {
@@ -53,11 +53,18 @@
       }
       .music-info {
         text-align: center;
+        text-decoration: none;
       }
       .meta {
         font-size: 90%;
         padding: 7px 0;
         background-color: #c3d825;
+      }
+      .meta #title,
+      .meta #author {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .meta #title {
         font-size: 101%;
@@ -73,11 +80,10 @@
     <div class="mod">
       <!-- <div class="hd">带UI的简易播放器</div> -->
       <div class="music-info">
-        <div id="cover" class="cover">
-          <a href="" id="cover-link">
-            <!-- <img src="http://tmp&#45;images.qiniudn.com/lark/default.png" id="cover&#45;img" /> -->
-          </a>
-        </div>
+        <a target="_blank" href="" id="cover-link">
+          <div id="cover" class="cover">
+          </div>
+        </a>
         <div class="meta">
           <div id="title"></div>
           <div id="author"></div>
