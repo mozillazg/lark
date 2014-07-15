@@ -7,22 +7,35 @@
     <link rel="stylesheet" href="http://labs.music.baidu.com/muplayer/doc/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://tmp-images.qiniudn.com/lark/player.css">
     <style>
-      #player-demo .avatar img {
-        width: 0;
-      }
       .mod {
-        width: 330px;
-        margin: 10% auto;
+        width: 200px;
+        margin: 5% auto;
       }
-      .music-info img {
-        width: 320px;
-        height: 200px;
+      .bd {
+        width: 200px;
       }
-      .music-info .title {
-        text-align: left;
+      #player-demo {
+        height: 50px;
+        margin-bottom: 0;
       }
-      .music-info .author {
+      #cover {
+        width: 100%;
+      }
+      #cover-img {
+        width: 100%;
+        height: 100%;
+        margin: auto;
+      }
+      #title {
+        padding: 5px 0;
+        text-align: center;
+      }
+      #author {
+        padding-bottom: 5px;
         text-align: right;
+      }
+      #author::before {
+        content: "By ";
       }
     </style>
   </head>
@@ -31,13 +44,13 @@
     <div class="mod">
       <!-- <div class="hd">带UI的简易播放器</div> -->
       <div class="music-info">
-        <div class="cover">
+        <div id="cover">
           <a href="" id="cover-link">
             <img src="http://tmp-images.qiniudn.com/lark/default.png" id="cover-img" />
           </a>
         </div>
-        <div class="title"><span id="title"></span></div>
-        <div class="author">—— <span id="author"></span></div>
+        <div id="title"></div>
+        <div id="author"></div>
       </div>
       <div class="bd">
         <div id="player-demo">
@@ -57,9 +70,6 @@
               </span>
               <span class="mode" title="mode"><i class="glyphicon glyphicon-repeat"></i></span>
             </div>
-            <a class="avatar" href="javascript:;">
-              <img alt="" src="http://labs.music.baidu.com/muplayer/doc/img/default.jpg">
-            </a>
             <div class="progress-bar"></div>
           </div>
         </div>
@@ -97,7 +107,9 @@
                   async: false,
                   success: function(data) {
                     data = data.data
+                    // 设置音频 URL
                     _this.setUrl(data.ogg);
+                    // 更新封面及作者信息
                     var $coverLink = $("#cover-link"),
                         $coverImg = $("#cover-img"),
                         $title = $("#title"),
@@ -249,18 +261,7 @@
           }).on('player:pause player:stop', function() {
             $progress.slider('disable');
             $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
-          }).on('timeupdate', handleTimeupdate).on('player:fetchend', function(r) {
-            var info = r.songinfo;
-            if (info) {
-              var title = info.title + ' - ' + info.author;
-              $avatar.attr({
-                title: title
-              }).find('img').attr({
-                alt: title,
-                src: info.pic_small
-              });
-            }
-          });
+          }).on('timeupdate', handleTimeupdate);
 
         // 先初始化添加3首歌
         newMusic();
