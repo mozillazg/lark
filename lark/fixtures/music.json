@@ -103,5 +103,140 @@
   },
   "model": "music.music",
   "pk": 7
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1457063/",
+    "author": "\u9ad8\u6a4b\u6d0b\u5b50",
+    "title": "\u6b8b\u9177\u306a\u5929\u4f7f\u306e\u30c6\u30fc\u30bc(Director Edit version)",
+    "cover": "http://tmp-images.qiniudn.com/lark/325be3142dcc930f636b0e2889e9bb0a7b52343a.jpg",
+    "modified": "2014-07-15T05:43:35.525Z",
+    "created": "2014-07-15T05:43:35.523Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/325be3142dcc930f636b0e2889e9bb0a7b52343a.mp3",
+    "sid": "8",
+    "ogg": "http://tmp-images.qiniudn.com/lark/325be3142dcc930f636b0e2889e9bb0a7b52343a.ogg"
+  },
+  "model": "music.music",
+  "pk": 8
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/2287814/",
+    "author": "\u30b2\u30fc\u30e0\u30fb\u30df\u30e5\u30fc\u30b8\u30c3\u30af",
+    "title": "\u661f\u5ea7",
+    "cover": "http://tmp-images.qiniudn.com/lark/d44d96faa7a1fdf48c838fe8dcde840123ffc719.jpg",
+    "modified": "2014-07-15T05:44:29.339Z",
+    "created": "2014-07-15T05:44:29.337Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/d44d96faa7a1fdf48c838fe8dcde840123ffc719.mp3",
+    "sid": "9",
+    "ogg": "http://tmp-images.qiniudn.com/lark/d44d96faa7a1fdf48c838fe8dcde840123ffc719.ogg"
+  },
+  "model": "music.music",
+  "pk": 9
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/2284475/",
+    "author": "Carpenters",
+    "title": "Top Of The World",
+    "cover": "http://tmp-images.qiniudn.com/lark/5a95f55bff67003e4d01e52976fd6b6eee994995.jpg",
+    "modified": "2014-07-15T05:48:09.352Z",
+    "created": "2014-07-15T05:48:09.350Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/5a95f55bff67003e4d01e52976fd6b6eee994995.mp3",
+    "sid": "10",
+    "ogg": "http://tmp-images.qiniudn.com/lark/5a95f55bff67003e4d01e52976fd6b6eee994995.ogg"
+  },
+  "model": "music.music",
+  "pk": 10
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1394592/",
+    "author": "Club 8",
+    "title": "Love In December",
+    "cover": "http://tmp-images.qiniudn.com/lark/e0737405e5e8272057c4bf43c0059fee44da2741.jpg",
+    "modified": "2014-07-15T05:48:29.326Z",
+    "created": "2014-07-15T05:48:29.325Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/e0737405e5e8272057c4bf43c0059fee44da2741.mp3",
+    "sid": "11",
+    "ogg": "http://tmp-images.qiniudn.com/lark/e0737405e5e8272057c4bf43c0059fee44da2741.ogg"
+  },
+  "model": "music.music",
+  "pk": 11
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/25825288/",
+    "author": "V.A.",
+    "title": "\u30ec\u30c3\u30c8\u30fb\u30a4\u30c3\u30c8\u30fb\u30b4\u30fc~\u3042\u308a\u306e\u307e\u307e\u3067~(\u65e5\u672c\u8a9e\u6b4c)",
+    "cover": "http://tmp-images.qiniudn.com/lark/e316bb523e5a6a820a89ee9a57ef0a40a710e54e.jpg",
+    "modified": "2014-07-15T05:48:56.294Z",
+    "created": "2014-07-15T05:48:56.291Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/e316bb523e5a6a820a89ee9a57ef0a40a710e54e.mp3",
+    "sid": "12",
+    "ogg": "http://tmp-images.qiniudn.com/lark/e316bb523e5a6a820a89ee9a57ef0a40a710e54e.ogg"
+  },
+  "model": "music.music",
+  "pk": 12
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1507397/",
+    "author": "\u8424\u706b\u866b",
+    "title": "\u8424\u706b\u866b\u4e4b\u821e",
+    "cover": "http://tmp-images.qiniudn.com/lark/df9c98484d0a3d3795d8c0033c89ee14d6c7c3bf.jpg",
+    "modified": "2014-07-15T05:49:12.696Z",
+    "created": "2014-07-15T05:49:12.694Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/df9c98484d0a3d3795d8c0033c89ee14d6c7c3bf.mp3",
+    "sid": "13",
+    "ogg": "http://tmp-images.qiniudn.com/lark/df9c98484d0a3d3795d8c0033c89ee14d6c7c3bf.ogg"
+  },
+  "model": "music.music",
+  "pk": 13
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1493670/",
+    "author": "Nightwish",
+    "title": "Sleeping Sun (2005 Version)",
+    "cover": "http://tmp-images.qiniudn.com/lark/1b9675e6ba456896a450df7395eb32d49311cd23.jpg",
+    "modified": "2014-07-15T05:49:27.980Z",
+    "created": "2014-07-15T05:49:27.979Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/1b9675e6ba456896a450df7395eb32d49311cd23.mp3",
+    "sid": "14",
+    "ogg": "http://tmp-images.qiniudn.com/lark/1b9675e6ba456896a450df7395eb32d49311cd23.ogg"
+  },
+  "model": "music.music",
+  "pk": 14
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1755320/",
+    "author": "\u5434\u5146\u57fa",
+    "title": "\u80e1\u7b33\u5341\u516b\u62cd",
+    "cover": "http://tmp-images.qiniudn.com/lark/a593b754ec8b8664b0478abb40c4a71723564a22.jpg",
+    "modified": "2014-07-15T05:49:44.661Z",
+    "created": "2014-07-15T05:49:44.658Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/a593b754ec8b8664b0478abb40c4a71723564a22.mp3",
+    "sid": "15",
+    "ogg": "http://tmp-images.qiniudn.com/lark/a593b754ec8b8664b0478abb40c4a71723564a22.ogg"
+  },
+  "model": "music.music",
+  "pk": 15
+},
+{
+  "fields": {
+    "douban": "http://music.douban.com/subject/1418252/",
+    "author": "\u9f9a\u4e00/\u7f57\u5b88\u8bda",
+    "title": "\u5bd2\u5c71\u50e7\u8e2a",
+    "cover": "http://tmp-images.qiniudn.com/lark/799d67f7a81b27750dc257f95cac10bb7e7da451.jpg",
+    "modified": "2014-07-15T05:50:05.044Z",
+    "created": "2014-07-15T05:50:05.041Z",
+    "mp3": "http://tmp-images.qiniudn.com/lark/799d67f7a81b27750dc257f95cac10bb7e7da451.mp3",
+    "sid": "16",
+    "ogg": "http://tmp-images.qiniudn.com/lark/799d67f7a81b27750dc257f95cac10bb7e7da451.ogg"
+  },
+  "model": "music.music",
+  "pk": 16
 }
 ]
