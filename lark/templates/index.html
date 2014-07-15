@@ -103,7 +103,7 @@
               return function() {
                 var sid = _this.getCur();
                 $.ajax({
-                  url: '/music/api/music/' + sid + '/',
+                  url: '/api/music/' + sid + '/',
                   async: false,
                   success: function(data) {
                     data = data.data
@@ -170,7 +170,7 @@
           // 添加新的音乐
           function newMusic() {
             $.ajax({
-              url: '/music/api/random/',
+              url: '/api/random/',
               success: function(data) {
                 player.add([data.data.sid]);
                 player.play();
