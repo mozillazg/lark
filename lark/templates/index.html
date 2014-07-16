@@ -7,9 +7,17 @@
     <link rel="stylesheet" href="http://labs.music.baidu.com/muplayer/doc/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://tmp-images.qiniudn.com/lark/player.css">
     <style>
+      body {
+        background: url("http://tmp-images.qiniudn.com/lark/giftly.png");
+      }
       .mod {
         width: 300px;
         margin: 5% auto;
+        border-radius: 5px 5px;
+        box-shadow: rgba(0, 0, 0, 0.3) 1px 1px;
+      }
+      .mod a {
+        text-decoration: none;
       }
       .bd {
         width: 100%;
@@ -75,12 +83,12 @@
       }
       .music-info {
         text-align: center;
-        text-decoration: none;
       }
       .meta {
         font-size: 90%;
         padding: 7px 0;
-        background-color: #c3d825;
+        /* background-color: #c3d825; */
+        background-color: rgba(195, 216, 37, 0.95);
       }
       .meta #title,
       .meta #author {
@@ -102,7 +110,7 @@
     <div class="mod">
       <!-- <div class="hd">带UI的简易播放器</div> -->
       <div class="music-info">
-        <a class="cover" target="_blank" href="" id="cover-link">
+        <a class="cover" target="_blank" href="javascript: void(0);" id="cover-link">
           <div id="cover" class="cover">
             <div class="tip"><span>查看详情</span></div>
           </div>
