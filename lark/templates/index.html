@@ -96,6 +96,7 @@
         overflow: hidden;
       }
       .meta {
+        height: 50px;
         font-size: 90%;
         padding-top: 7px;
         padding-bottom: 8px;
@@ -111,9 +112,6 @@
       .meta #title {
         font-size: 101%;
         font-weight: bold;
-      }
-      .meta #author::before {
-        content: "By ";
       }
     </style>
   </head>
@@ -181,7 +179,7 @@
           $cover.css("background-image", 'url("' + data.cover +'")');
           $title.text(data.title);
           $title.prop("title", data.title);
-          $author.text(data.author);
+          $author.text("By " + data.author);
           $author.prop("title", data.author);
           // 更新 title 标签内容
           $("title").text("♩♪♫♬ " + data.title + " - " + data.author + " - " + "Lark");
