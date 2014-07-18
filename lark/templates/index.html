@@ -12,6 +12,8 @@
       }
       .mod {
         width: 300px;
+        height: 300px;
+        overflow: hidden;
         margin: 5% auto;
         border-radius: 5px 5px;
         box-shadow: rgba(0, 0, 0, 0.3) 1px 1px;
@@ -25,11 +27,10 @@
       #player-demo {
         width: 100%;
         height: 50px;
+        overflow: hidden;
         margin-bottom: 0;
         padding-bottom: 0;
-        /* margin-top: 3px; */
         box-shadow: none;
-        -moz-box-shadow: none;
         border-radius: 0 0 5px 5px;
       }
       #player-demo .glyphicon {
@@ -135,20 +136,20 @@
         <div id="player-demo">
           <div class="player-widget">
             <div class="progress-bar"></div>
-            <div class="volume" title="volume">
+            <div class="volume">
               <i class="glyphicon glyphicon-volume-down"></i><span class="bar"></span>
             </div>
             <div class="opts">
-              <span class="prev" title="prev">
+              <span class="prev">
                 <i class="glyphicon glyphicon-step-backward"></i>
               </span>
-              <span class="ctrl" title="play">
+              <span class="ctrl">
                 <i class="glyphicon glyphicon-play"></i>
               </span>
-              <span class="next" title="next">
+              <span class="next">
                 <i class="glyphicon glyphicon-step-forward"></i>
               </span>
-              <span class="mode" title="mode"><i class="glyphicon glyphicon-repeat"></i></span>
+              <span class="mode"><i class="glyphicon glyphicon-random"></i></span>
             </div>
           </div>
         </div>
@@ -171,6 +172,20 @@
         // 通过AMD方式加载muplayer
         require(['muplayer/player'], function(Player) {
 
+        // 更新播放器上的歌曲信息
+        function updateMusicInfo(data) {
+          var $coverLink = $("#cover-link"),
+              $cover = $("#cover"),
+              $title = $("#title"),
+              $author = $("#author");
+          $coverLink.prop("href", data.douban);
+          $cover.css("background-image", 'url("' + data.cover +'")');
+          $title.text(data.title);
+          $title.prop("title", data.title);
+          $author.text(data.author);
+          $author.prop("title", data.author);
+        }
+
         // 重写 _fetch 方法，支持通过 sid 获取音频资源信息
         Player.prototype._fetch = function() {
           var def;
@@ -188,14 +203,7 @@
                     // 设置音频 URL
                     _this.setUrl(data.ogg);
                     // 更新封面及作者信息
-                    var $coverLink = $("#cover-link"),
-                        $cover = $("#cover"),
-                        $title = $("#title"),
-                        $author = $("#author");
-                    $coverLink.prop("href", data.douban);
-                    $cover.css("background-image", 'url("' + data.cover +'")');
-                    $title.text(data.title);
-                    $author.text(data.author);
+                    updateMusicInfo(data);
                     return def.resolve();
                   },
                   error: function() {
@@ -208,138 +216,135 @@
           return def.promise();
         };
 
+        var player = window.player = new Player({
+          baseDir: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2',
+          absoluteUrl: false,
+          mode: 'list-random',
+          engines: [{
+            constructor: 'AudioCore'
+          }]
+        }),
+        $player = $('.player-widget'),
+        $opts = $player.find('.opts'),
+        $ctrlBtn = $opts.find('.ctrl'),
+        $ctrlIcon = $ctrlBtn.find('i'),
+        $prevBtn = $opts.find('.prev'),
+        $nextBtn = $opts.find('.next'),
+        $modeBtn = $opts.find('.mode'),
+        $modeIcon = $modeBtn.find('i'),
+        $volume = $player.find('.volume'),
+        $progress = $player.find('.progress-bar'),
+        hasAddedNewMusic = false,
 
-          hasAddedNewMusic = false;
-          var player = window.player = new Player({
-            baseDir: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2',
-            absoluteUrl: false,
-            engines: [{
-              constructor: 'AudioCore'
-            }]
+        // 监听播放时派发的timeupdate事件以更新播放进度条等相关UI
+        handleTimeupdate = function() {
+          var pos = player.curPos(),
+              duration = player.duration(),
+              progressValue = duration ? pos / duration * 1000 : 0;
+          $progress.slider('option', 'value', progressValue);
+          if (!hasAddedNewMusic && progressValue >= 800) {
+            // 添加新的音乐
+            newMusic();
+            hasAddedNewMusic = true;
+          } else if (hasAddedNewMusic && progressValue <= 500) {
+            hasAddedNewMusic = false;
+          }
+        };
 
-          }),
-          $player = $('.player-widget'),
-          $opts = $player.find('.opts'),
-          $ctrlBtn = $opts.find('.ctrl'),
-          $ctrlIcon = $ctrlBtn.find('i'),
-          $prevBtn = $opts.find('.prev'),
-          $nextBtn = $opts.find('.next'),
-          $modeBtn = $opts.find('.mode'),
-          $modeIcon = $modeBtn.find('i'),
-          $volume = $player.find('.volume'),
-          $progress = $player.find('.progress-bar'),
-          $avatar = $player.find('.avatar'),
-
-          // 监听播放时派发的timeupdate事件以更新播放进度条等相关UI
-          handleTimeupdate = function() {
-            var pos = player.curPos(),
-                duration = player.duration(),
-                progressValue = duration ? pos / duration * 1000 : 0;
-            $progress.slider('option', 'value', progressValue);
-            if (!hasAddedNewMusic && progressValue >= 800) {
-              // 添加新的音乐
-              newMusic();
-              hasAddedNewMusic = true;
-            } else if (hasAddedNewMusic && progressValue <= 500) {
-              hasAddedNewMusic = false;
-            }
-          };
-
-          // 添加新的音乐
-          function newMusic() {
-            $.ajax({
-              url: '/api/music/random/',
-              success: function(data) {
-                player.add([data.sid]);
-                player.play();
-              }
-            });
-          };
-
-
-          // 在各个按钮上监听点击事件，触发时改变按钮的对应样式，并执行player的相应方法
-          $ctrlBtn.click(function() {
-            if ($ctrlIcon.hasClass('glyphicon-play')) {
-              $ctrlIcon.removeClass('glyphicon-play').addClass('glyphicon-pause');
+        // 添加新的音乐
+        function newMusic() {
+          $.ajax({
+            url: '/api/music/random/',
+            success: function(data) {
+              player.add([data.sid]);
               player.play();
-            } else if ($ctrlIcon.hasClass('glyphicon-pause')) {
-              $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
-              player.pause();
             }
           });
+        };
 
-          $prevBtn.click(function() {
-            newMusic();
-            player.prev();
-          });
 
-          $nextBtn.click(function() {
-            newMusic();
-            player.next();
-          });
-
-          var modes = ['loop', 'list-random'],
-              modeIndex = 0;
-          $modeBtn.click(function() {
-            var mode = modes[++modeIndex % 2];
-            player.setMode(mode);
-            if (mode === 'loop') {
-              $modeIcon.removeClass('glyphicon-random').addClass('glyphicon-refresh');
-            } else {
-              $modeIcon.removeClass('glyphicon-refresh').addClass('glyphicon-random');
-            }
-          });
-
-          $volume.find('i').click(function() {
-            var $this = $(this),
-            isMute = player.getMute();
-
-            if (isMute) {
-              $this.removeClass('glyphicon-volume-off')
-              .addClass('glyphicon-volume-down').parent().removeClass('mute');
-            player.setMute(false);
-            } else {
-              $this.removeClass('glyphicon-volume-down')
-              .addClass('glyphicon-volume-off').parent().addClass('mute');
-              player.setMute(true);
-            }
-          });
-
-          $volume.find('.bar').slider({
-            value: player.getVolume(),
-            range: 'min',
-            change: function(e, ui) {
-              player.setVolume(ui.value);
-            },
-            stop: function(e, ui) {
-              $(ui.handle).blur();
-            }
-          });
-
-          // 通过jquery-ui的slider组件实现播放进度条的交互
-          $progress.slider({
-            range: 'min',
-            max: 1000,
-            disabled: true,
-            start: function() {
-              // 为了使拖动操作不受打断，进度条拖动操作开始时即暂停对timeupdate事件的监听
-              player.off('timeupdate');
-            },
-            stop: function(e, ui) {
-              // 拖动结束时再恢复对timeupdate事件的监听
-              player.on('timeupdate', handleTimeupdate).play(ui.value * player.duration());
-              $(ui.handle).blur();
-            }
-          });
-
-          // 事件驱动的UI：即UI应监听player派发的事件，以决定是否切换到对应的状态
-          player.on('player:play', function() {
-            $progress.slider('enable');
+        // 在各个按钮上监听点击事件，触发时改变按钮的对应样式，并执行player的相应方法
+        $ctrlBtn.click(function() {
+          if ($ctrlIcon.hasClass('glyphicon-play')) {
             $ctrlIcon.removeClass('glyphicon-play').addClass('glyphicon-pause');
-          }).on('player:pause player:stop', function() {
-            $progress.slider('disable');
+            player.play();
+          } else if ($ctrlIcon.hasClass('glyphicon-pause')) {
             $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
-          }).on('timeupdate', handleTimeupdate);
+            player.pause();
+          }
+        });
+
+        $prevBtn.click(function() {
+          player.prev();
+        });
+
+        $nextBtn.click(function() {
+          newMusic();
+          player.next();
+        });
+
+        var modes = ['list-random', 'single'],
+            modeIndex = 0;
+        $modeBtn.click(function() {
+          var mode = modes[++modeIndex % 2];
+          player.setMode(mode);
+          if (mode === 'single') {
+            $modeIcon.removeClass('glyphicon-random').addClass('glyphicon-repeat');
+          } else {
+            $modeIcon.removeClass('glyphicon-repeat').addClass('glyphicon-random');
+          }
+        });
+
+        $volume.find('i').click(function() {
+          var $this = $(this),
+          isMute = player.getMute();
+
+          if (isMute) {
+            $this.removeClass('glyphicon-volume-off')
+            .addClass('glyphicon-volume-down').parent().removeClass('mute');
+          player.setMute(false);
+          } else {
+            $this.removeClass('glyphicon-volume-down')
+            .addClass('glyphicon-volume-off').parent().addClass('mute');
+            player.setMute(true);
+          }
+        });
+
+        $volume.find('.bar').slider({
+          value: player.getVolume(),
+          range: 'min',
+          change: function(e, ui) {
+            player.setVolume(ui.value);
+          },
+          stop: function(e, ui) {
+            $(ui.handle).blur();
+          }
+        });
+
+        // 通过jquery-ui的slider组件实现播放进度条的交互
+        $progress.slider({
+          range: 'min',
+          max: 1000,
+          disabled: true,
+          start: function() {
+            // 为了使拖动操作不受打断，进度条拖动操作开始时即暂停对timeupdate事件的监听
+            player.off('timeupdate');
+          },
+          stop: function(e, ui) {
+            // 拖动结束时再恢复对timeupdate事件的监听
+            player.on('timeupdate', handleTimeupdate).play(ui.value * player.duration());
+            $(ui.handle).blur();
+          }
+        });
+
+        // 事件驱动的UI：即UI应监听player派发的事件，以决定是否切换到对应的状态
+        player.on('player:play', function() {
+          $progress.slider('enable');
+          $ctrlIcon.removeClass('glyphicon-play').addClass('glyphicon-pause');
+        }).on('player:pause player:stop', function() {
+          $progress.slider('disable');
+          $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
+        }).on('timeupdate', handleTimeupdate);
 
         // 先初始化添加3首歌
         newMusic();
