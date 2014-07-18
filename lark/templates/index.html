@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="http://tmp-images.qiniudn.com/lark/player.css">
     <style>
       body {
-        background: url("http://tmp-images.qiniudn.com/lark/giftly.png");
+        background: url("http://tmp-images.qiniudn.com/lark/noise-grey.v1.png");
       }
       .mod {
         width: 300px;
@@ -32,12 +32,20 @@
         -moz-box-shadow: none;
         border-radius: 0 0 5px 5px;
       }
+      #player-demo .glyphicon {
+        /* top: 3px; */
+      }
       #player-demo .opts {
         padding-left: 20px;
         margin-top: -15.5px;
       }
       #player-demo .volume {
         left: 150px;
+      }
+      .bar,
+      #player-demo .volume .bar,
+      #player-demo .progress-bar {
+        vertical-align: 27%;
       }
       #player-demo .progress-bar {
         bottom: auto;
@@ -83,10 +91,13 @@
       }
       .music-info {
         text-align: center;
+        height: 250px;
+        overflow: hidden;
       }
       .meta {
         font-size: 90%;
-        padding: 7px 0;
+        padding-top: 7px;
+        padding-bottom: 8px;
         /* background-color: #c3d825; */
         background-color: rgba(195, 216, 37, 0.95);
       }
