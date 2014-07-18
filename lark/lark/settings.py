@@ -22,7 +22,7 @@ SECRET_KEY = ')i4@2vfr##+zd3cn8ckw#!lebya1mk2sg@yq9boog+=ofi@hf9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEMPLATE_DEBUG = False
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'fm.3sd.me']
 
 SECRET_KEY = os.environ['LARK_SECRET_KEY']
 ADMIN_URL = os.environ['LARK_ADMIN_URL']
