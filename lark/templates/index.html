@@ -120,7 +120,6 @@
   <body>
 
     <div class="mod">
-      <!-- <div class="hd">带UI的简易播放器</div> -->
       <div class="music-info">
         <a class="cover" target="_blank" href="javascript: void(0);" id="cover-link">
           <div id="cover" class="cover">
@@ -184,6 +183,8 @@
           $title.prop("title", data.title);
           $author.text(data.author);
           $author.prop("title", data.author);
+          // 更新 title 标签内容
+          $("title").text("♩♪♫♬ " + data.title + " - " + data.author + " - " + "Lark");
         }
 
         // 重写 _fetch 方法，支持通过 sid 获取音频资源信息
