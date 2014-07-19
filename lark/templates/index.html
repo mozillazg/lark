@@ -53,6 +53,9 @@
         top: 0;
         left: 0;
       }
+      #player-demo .progress-bar .ui-slider-handle {
+        display: none;
+      }
       #player-demo .progress-bar,
       #player-demo .progress-bar .ui-slider-range {
         height: 4px;
@@ -119,7 +122,7 @@
 
     <div class="mod">
       <div class="music-info">
-        <a class="cover" target="_blank" href="javascript: void(0);" id="cover-link">
+        <a class="cover" href="#" id="cover-link">
           <div id="cover" class="cover">
             <div class="tip"><span>查看详情</span></div>
           </div>
@@ -176,6 +179,7 @@
               $title = $("#title"),
               $author = $("#author");
           $coverLink.prop("href", data.douban);
+          $coverLink.prop("target", "_blank");
           $cover.css("background-image", 'url("' + data.cover +'")');
           $title.text(data.title);
           $title.prop("title", data.title);
