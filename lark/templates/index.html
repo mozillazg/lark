@@ -163,14 +163,14 @@
       <script src="http://labs.music.baidu.com/muplayer/bower_components/requirejs/require.js"></script>
       <script src="http://labs.music.baidu.com/muplayer/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script>
-        require.config({
-          paths: {
-            muplayer: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2' // 须指向muplayer.js存放的目录
-          }
-        });
+      require.config({
+        paths: {
+          muplayer: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2' // 须指向muplayer.js存放的目录
+        }
+      });
 
-        // 通过AMD方式加载muplayer
-        require(['muplayer/player'], function(Player) {
+      // 通过AMD方式加载muplayer
+      require(['muplayer/player'], function(Player) {
 
         // 更新播放器上的歌曲信息
         function updateMusicInfo(data) {
@@ -182,9 +182,9 @@
           $coverLink.prop("target", "_blank");
           $cover.css("background-image", 'url("' + data.cover +'")');
           $title.text(data.title);
-          $title.prop("title", data.title);
+          $title.prop("title", $title.text());
           $author.text("By " + data.author);
-          $author.prop("title", data.author);
+          $author.prop("title", $author.text());
           // 更新 title 标签内容
           $("title").text("♩♪♫♬ " + data.title + " - " + data.author + " - " + "Lark");
         }
@@ -281,8 +281,8 @@
         });
 
         $nextBtn.click(function() {
-          newMusic();
           player.next();
+          newMusic();
         });
 
         var modes = ['list-random', 'single'],
