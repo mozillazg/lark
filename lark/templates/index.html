@@ -256,7 +256,6 @@
             url: '/api/music/random/',
             success: function(data) {
               player.add([data.sid]);
-              player.play();
             }
           });
         };
@@ -349,6 +348,7 @@
         newMusic();
         newMusic();
         newMusic();
+        player.play();
     });
 </script>
   </footer>

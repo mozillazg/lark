@@ -16,6 +16,7 @@ from music.views import next_music, json_obj, random_music
 @pytest.mark.django_db
 class TestMusic(object):
     def setup(self):
+        """测试开始前"""
         self.a = dict(title='music_a', author='author_a',
                       cover='http://www.example.com/a.jpg',
                       douban='http://music.douban.com/a',
@@ -34,6 +35,7 @@ class TestMusic(object):
         Music.objects.create(**self.b)
 
     def teardown(self):
+        """测试结束后"""
         Music.objects.all().delete()
 
     def test_music(self):
