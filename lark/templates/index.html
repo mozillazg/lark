@@ -199,20 +199,17 @@
             setTimeout((function(_this) {
               return function() {
                 var sid = _this.getCur();
-                $.ajax({
-                  url: '/api/music/sid/' + sid + '/',
-                  async: false,
-                  success: function(data) {
-                    // 设置音频 URL
-                    _this.setUrl(data.ogg);
-                    // 更新封面及作者信息
-                    updateMusicInfo(data);
-                    return def.resolve();
-                  },
-                  error: function() {
+                // 获取歌曲信息
+                var data = sidInfo[sid];
+                if (data) {
+                  // 设置音频 URL
+                  _this.setUrl(data.ogg);
+                  // 更新封面及作者信息
+                  updateMusicInfo(data);
+                  return def.resolve();
+                } else {
                     def.resolve();
-                  }
-                });
+                }
               };
             })(this), 0);
           }
@@ -222,7 +219,7 @@
         var player = window.player = new Player({
           baseDir: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2',
           absoluteUrl: false,
-          mode: 'list-random',
+          mode: 'random',
           engines: [{
             constructor: 'AudioCore'
           }]
@@ -237,6 +234,7 @@
         $modeIcon = $modeBtn.find('i'),
         $volume = $player.find('.volume'),
         $progress = $player.find('.progress-bar'),
+        sidInfo = new Object(),
         hasAddedNewMusic = false,
 
         // 监听播放时派发的timeupdate事件以更新播放进度条等相关UI
@@ -262,6 +260,7 @@
             url: '/api/music/random/',
             async: async,
             success: function(data) {
+              sidInfo[data.sid] = data;
               player.add(data.sid);
             }
           });
@@ -288,7 +287,7 @@
           newMusic();
         });
 
-        var modes = ['list-random', 'single'],
+        var modes = ['random', 'single'],
             modeIndex = 0;
         $modeBtn.click(function() {
           var mode = modes[++modeIndex % 2];
