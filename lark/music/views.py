@@ -29,7 +29,8 @@ def music(request, sid):
     logger.debug('music - sid: %s' % sid)
     try:
         music = Music.objects.filter(sid=sid)[0]
-    except IndexError:
+    except IndexError as e:
+        logger.debug('%s: %s' % (sid, e))
         music = Music.objects.filter()[0]
     return json_obj(music)
 
@@ -39,7 +40,8 @@ def next_music(request, next_number):
     """下一首歌"""
     try:
         music = Music.objects.filter()[int(next_number) + 1]
-    except IndexError:
+    except IndexError as e:
+        logger.debug('%s: %s' % (next_number, e))
         music = Music.objects.filter()[0]
     logger.debug('music - %s' % music.pk)
     return json_obj(music)

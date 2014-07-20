@@ -255,11 +255,14 @@
         };
 
         // 添加新的音乐
-        function newMusic() {
+        function newMusic(async) {
+          var async = (typeof async === "undefined") ? true : async;
+          console.debug("newMusic async: " + async);
           $.ajax({
             url: '/api/music/random/',
+            async: async,
             success: function(data) {
-              player.add([data.sid]);
+              player.add(data.sid);
             }
           });
         };
@@ -348,7 +351,9 @@
           $ctrlIcon.removeClass('glyphicon-pause').addClass('glyphicon-play');
         }).on('timeupdate', handleTimeupdate);
 
-        // 先初始化添加3首歌
+        // 先初始化添加几首歌
+        newMusic(false);
+        newMusic();
         newMusic();
         newMusic();
         newMusic();
