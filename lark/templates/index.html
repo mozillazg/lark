@@ -1,3 +1,6 @@
+<!--
+源代码：https://github.com/mozillazg/lark
+-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -89,7 +92,7 @@
       }
       .cover .tip span {
         display: block;
-        margin: 40% auto;
+        line-height: 200px;
         text-align: center;
         color: #595857;
       }
@@ -163,6 +166,8 @@
       <script src="http://labs.music.baidu.com/muplayer/bower_components/requirejs/require.js"></script>
       <script src="http://labs.music.baidu.com/muplayer/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script>
+      console.info("源代码：https://github.com/mozillazg/lark");
+
       require.config({
         paths: {
           muplayer: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2' // 须指向muplayer.js存放的目录
@@ -255,7 +260,6 @@
         // 添加新的音乐
         function newMusic(async) {
           var async = (typeof async === "undefined") ? true : async;
-          console.debug("newMusic async: " + async);
           $.ajax({
             url: '/api/music/random/',
             async: async,
