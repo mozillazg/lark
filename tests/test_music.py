@@ -75,6 +75,7 @@ class BaseTest(object):
     def teardown(self):
         """测试后执行的代码"""
         Music.objects.all().delete()
+        get_user_model().objects.all().delete()
 
 
 class TestMusic(BaseTest):
