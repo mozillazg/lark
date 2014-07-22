@@ -17,9 +17,10 @@ from music.views import next_music, json_obj, random_music
 
 
 @pytest.mark.django_db
-class TestMusic(object):
+class BaseTest(object):
+
     def setup(self):
-        """测试开始前"""
+        """测试前执行的代码"""
         self.a = dict(title='music_a', author='author_a',
                       cover='http://www.example.com/a.jpg',
                       douban='http://music.douban.com/a',
@@ -34,26 +35,6 @@ class TestMusic(object):
                       ogg='http://www.example.com/b.ogg',
                       sid='2',
                       )
-        Music.objects.create(**self.a)
-        Music.objects.create(**self.b)
-
-    def teardown(self):
-        """测试结束后"""
-        Music.objects.all().delete()
-
-    def test_music(self):
-        a = Music.objects.get(title=self.a['title'])
-        b = Music.objects.get(title=self.b['title'])
-        assert a.author == self.a['author']
-        assert a.mp3 == self.a['mp3']
-        assert b.author == self.b['author']
-        assert b.mp3 == self.b['mp3']
-        assert self.a['author'] in str(a)
-
-
-@pytest.mark.django_db
-class TestView(object):
-    def setup(self):
         self.c = dict(title='music_c', author='author_c',
                       cover='http://www.example.com/c.jpg',
                       douban='http://music.douban.com/c',
@@ -73,9 +54,42 @@ class TestView(object):
         self.m_c = Music.objects.create(**self.c)
         self.m_d = Music.objects.create(**self.d)
         Music(**self.e).save()
+        Music.objects.create(**self.a)
+        Music.objects.create(**self.b)
+
+        self.username = 'aswxcddvz@!1322214'
+        self.password = 'eee21*+daa1@dd/2'
+        self.email = 'agc124ds@abded113c.com'
+        get_user_model().objects.create_superuser(username=self.username,
+                                                  password=self.password,
+                                                  email=self.email)
+        self.c = dict(title='music_c', author='author_c',
+                      cover='http://www.example.com/c.jpg',
+                      douban='http://music.douban.com/c',
+                      mp3='http://www.example.com/c.mp3',
+                      ogg='http://www.example.com/c.ogg',
+                      sid='4',
+                      )
+        self.m_c = Music.objects.create(**self.c)
 
     def teardown(self):
+        """测试后执行的代码"""
         Music.objects.all().delete()
+
+
+class TestMusic(BaseTest):
+
+    def test_music(self):
+        a = Music.objects.get(title=self.a['title'])
+        b = Music.objects.get(title=self.b['title'])
+        assert a.author == self.a['author']
+        assert a.mp3 == self.a['mp3']
+        assert b.author == self.b['author']
+        assert b.mp3 == self.b['mp3']
+        assert self.a['author'] in str(a)
+
+
+class TestView(BaseTest):
 
     def test_json_obj(self):
         obj = json_obj(self.m_c)
@@ -134,23 +148,7 @@ class TestDeocrator(object):
         assert response.content.decode() == str(d1)
 
 
-@pytest.mark.django_db
-class TestAdmin(object):
-    def setup(self):
-        self.username = 'aswxcddvz@!1322214'
-        self.password = 'eee21*+daa1@dd/2'
-        self.email = 'agc124ds@abded113c.com'
-        get_user_model().objects.create_superuser(username=self.username,
-                                                  password=self.password,
-                                                  email=self.email)
-        self.c = dict(title='music_c', author='author_c',
-                      cover='http://www.example.com/c.jpg',
-                      douban='http://music.douban.com/c',
-                      mp3='http://www.example.com/c.mp3',
-                      ogg='http://www.example.com/c.ogg',
-                      sid='4',
-                      )
-        self.m_c = Music.objects.create(**self.c)
+class TestAdmin(BaseTest):
 
     def test_music_list_url(self, client):
         client.login(username=self.username, password=self.password)
