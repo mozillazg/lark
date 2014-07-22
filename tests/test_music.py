@@ -5,9 +5,12 @@ import copy
 import json
 
 from django.core.urlresolvers import reverse
+from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 import pytest
 
+from music.admin import MusicAdmin
 from music.decorators import json_view
 from music.models import Music
 from music.views import next_music, json_obj, random_music
@@ -129,3 +132,33 @@ class TestDeocrator(object):
         assert response.status_code == 200
         assert response['Content-Type'] == 'text/html; charset=utf-8'
         assert response.content.decode() == str(d1)
+
+
+@pytest.mark.django_db
+class TestAdmin(object):
+    def setup(self):
+        self.username = 'aswxcddvz@!1322214'
+        self.password = 'eee21*+daa1@dd/2'
+        self.email = 'agc124ds@abded113c.com'
+        get_user_model().objects.create_superuser(username=self.username,
+                                                  password=self.password,
+                                                  email=self.email)
+        self.c = dict(title='music_c', author='author_c',
+                      cover='http://www.example.com/c.jpg',
+                      douban='http://music.douban.com/c',
+                      mp3='http://www.example.com/c.mp3',
+                      ogg='http://www.example.com/c.ogg',
+                      sid='4',
+                      )
+        self.m_c = Music.objects.create(**self.c)
+
+    def test_music_list_url(self, client):
+        client.login(username=self.username, password=self.password)
+        response = client.get(reverse('admin:music_music_changelist'))
+        assert response.status_code == 200
+
+    def test_music_admin_changelist(self, client):
+        client.login(username=self.username, password=self.password)
+        m = MusicAdmin(Music, admin.site)
+        assert self.m_c.ogg in m.audio_ogg(self.m_c)
+        assert self.m_c.mp3 in m.audio_mp3(self.m_c)
