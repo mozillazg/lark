@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Lark</title>
-    <link rel="stylesheet" href="http://labs.music.baidu.com/muplayer/doc/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://tmp-images.qiniudn.com/lark/player.css">
     <style>
       body {
@@ -17,7 +17,7 @@
         width: 300px;
         height: 300px;
         overflow: hidden;
-        margin: 5% auto 20%;
+        margin: 5% auto 30%;
         border-radius: 5px 5px;
         box-shadow: rgba(0, 0, 0, 0.3) 1px 1px;
       }
@@ -159,17 +159,17 @@
     </div>
 
     <footer>
-      <script src="http://labs.music.baidu.com/muplayer/bower_components/jquery/jquery.min.js"></script>
-      <script src="http://labs.music.baidu.com/muplayer/bower_components/jquery-ui/ui/jquery-ui.js"></script>
-      <script src="http://labs.music.baidu.com/muplayer/bower_components/jquery-ui/ui/jquery.ui.slider.js"></script>
-      <script src="http://labs.music.baidu.com/muplayer/bower_components/requirejs/require.js"></script>
-      <script src="http://labs.music.baidu.com/muplayer/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="/static/bower_components/jquery/jquery.min.js"></script>
+      <script src="/static/bower_components/jquery-ui/ui/jquery-ui.js"></script>
+      <script src="/static/bower_components/jquery-ui/ui/jquery.ui.slider.js"></script>
+      <script src="/static/bower_components/requirejs/require.js"></script>
+      <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script>
       console.info("源代码：https://github.com/mozillazg/lark");
 
       require.config({
         paths: {
-          muplayer: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2' // 须指向muplayer.js存放的目录
+          muplayer: '/static/bower_components/muplayer/dist/' // 须指向muplayer.js存放的目录
         }
       });
 
