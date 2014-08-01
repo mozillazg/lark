@@ -54,3 +54,4 @@ coverage.xml
 docs/_build/
 
 *.swp
+bower_components/
