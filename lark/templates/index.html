@@ -223,7 +223,7 @@
         var player = window.player = new Player({
           baseDir: 'http://tmp-images.qiniudn.com/js/muplayer/0.9.2',
           absoluteUrl: false,
-          mode: 'random',
+          mode: 'loop',
           engines: [{
             constructor: 'AudioCore'
           }]
@@ -290,7 +290,7 @@
           newMusic();
         });
 
-        var modes = ['random', 'single'],
+        var modes = ['loop', 'single'],
             modeIndex = 0;
         $modeBtn.click(function() {
           var mode = modes[++modeIndex % 2];
